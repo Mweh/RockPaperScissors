@@ -18,6 +18,24 @@
 
 import SwiftUI
 
+struct PickStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 100))
+            .shadow(radius: 5)
+            .padding(5)
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .shadow(radius: 5)
+    }
+}
+
+extension View{
+    func pickStyle() -> some View{
+        modifier(PickStyle())
+    }
+}
+
 struct ContentView: View {
     @State private var pick = ["✊", "✋", "✌️"].shuffled()
     @State private var isWin = Bool.random()
@@ -27,6 +45,13 @@ struct ContentView: View {
     @State private var totalTap = 0
     @State private var totalScore = 0
     @State private var isTenQuestion = false
+    
+    @ViewBuilder var TextWinLose: some View{
+        Text("\(isWin ? "Win" : "Lose")")
+            .foregroundStyle(isWin ? .green : .red)
+            .font(.system(size: 80).bold())
+            .shadow(radius: 5)
+    }
     
     var body: some View {
         ZStack{
@@ -44,10 +69,7 @@ struct ContentView: View {
                 Spacer()
                 Text("Tap the correct move to")
                     .font(.system(size: 30).bold())
-                Text("\(isWin ? "Win" : "Lose")")
-                    .foregroundStyle(isWin ? .green : .red)
-                    .font(.system(size: 80).bold())
-                    .shadow(radius: 5)
+                TextWinLose
                 Spacer()
                 Section{
                     HStack{
@@ -57,14 +79,9 @@ struct ContentView: View {
                                 scorePoint(playerChoice: tap, computerChoice: pick[0])
                                 rePick()
                                 reset()
-                                print("Player choice: \(pick[0]), Computer choice: \(pick[0])")
+                                print("Player choice: \(tap), Computer choice: \(pick[0])")
                             }
-                            .font(.system(size: 100))
-                            .shadow(radius: 5)
-                            .padding(5)
-                            .background(.ultraThinMaterial)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .shadow(radius: 5)
+                            .pickStyle()
                         }
                     }
                     Spacer()
@@ -96,10 +113,8 @@ struct ContentView: View {
             (playerScissors && computerPaper)
         }
         
-        if playerChoice == computerChoice {
-            return
-        }
-        
+        if playerChoice == computerChoice { return}
+
         (isWin && winPoint) || (!isWin && !winPoint) ? score += 1 : ()
     }
     
