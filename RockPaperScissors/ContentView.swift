@@ -25,8 +25,8 @@ struct ContentView: View {
     @State private var playerChoice = ""
     @State private var score = 0
     @State private var totalTap = 0
-    @State private var isTenQuestion = false
     @State private var totalScore = 0
+    @State private var isTenQuestion = false
     
     var body: some View {
         ZStack{
@@ -54,7 +54,6 @@ struct ContentView: View {
                         ForEach(pick, id: \.self){ tap in
                             Button(tap){
                                 totalTap += 1
-                                
                                 scorePoint(playerChoice: tap, computerChoice: pick[0])
                                 rePick()
                                 reset()
@@ -76,7 +75,6 @@ struct ContentView: View {
                 }
                 Spacer()
                 Spacer()
-
             }
         }
         .alert("Your Total score is \(totalScore)", isPresented: $isTenQuestion){
@@ -97,15 +95,12 @@ struct ContentView: View {
             (playerPaper && computerRock) ||
             (playerScissors && computerPaper)
         }
-        var losePoint: Bool {
-            (playerScissors && computerRock) ||
-            (playerRock && computerPaper) ||
-            (playerPaper && computerScissors)
+        
+        if playerChoice == computerChoice {
+            return
         }
         
-        if (isWin && winPoint) || (!isWin && losePoint){
-            score += 1
-        }
+        (isWin && winPoint) || (!isWin && !winPoint) ? score += 1 : ()
     }
     
     func rePick(){
@@ -122,8 +117,8 @@ struct ContentView: View {
             totalTap = 0
         }
     }
-    
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
