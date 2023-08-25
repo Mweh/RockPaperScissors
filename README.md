@@ -12,5 +12,5 @@ So, if the app chose “Rock” and “Win” the player would need to choose �
 
 ### Screenshot
 ![Screenshot](https://github.com/Mweh/RockPaperScissors/blob/main/Screenshot/image.png?raw=true)
-### Recorded
+### Demo
 ![Recorded](https://github.com/Mweh/RockPaperScissors/blob/main/Screenshot/Simulator%20Screen%20Recording%20-%20iPhone%2014%20Pro%20-%202023-08-24%20at%2021.12.24.gif?raw=true)
